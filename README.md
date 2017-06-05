@@ -1,11 +1,11 @@
 # rn_resolution
-[React Native][rn]中使用的尺寸单位是pt，是一个绝对长度，而设计师使用的是px, 这两种尺寸如何换算呢？官方提供了[PixelRatio][1]:
+[React Native][rn]中使用的尺寸单位是pt，是一个绝对长度，而设计师使用的是px, 这两种尺寸如何换算呢？官方提供了[PixelRatio][1]:
 ```javascript
 import {PixelRatio} from 'react-native';
 const pt2px = pt=>PixelRatio.getPixelSizeForLayoutSize(pt);
 const px2pt = px=>PixelRatio.roundToNearestPixel(px);
 ```
-设计师给你一个尺寸，比如100px*200px的View，按照下面的方式可实现设计还原：
+设计师给你一个尺寸，比如100px*200px的View，按照下面的方式可实现设计还原：
 ```javascript
 <View style={{width:px2pt(100),height:px2pt(200),backgroundColor:"red"}}/>
 ```
@@ -40,7 +40,7 @@ const styles={
 ```
 这样处理后，在根节点内，你再也不用考虑pt的问题了，直接使用px即可。
 
-不过此时还有另外一个问题，设计尺寸是死的，屏幕大小是活的，得考虑分辨率适配啊，那在不同的分辨率下如何正确的实现设计师的设计呢？
+不过此时还有另外一个问题，设计尺寸是死的，屏幕大小是活的，得考虑分辨率适配啊，那在不同的分辨率下如何正确的实现设计师的设计呢？
 
 我们将使用一种游戏经常会用到得方案，fixedWidth/fixedHeight.
 >###fixedWidth
