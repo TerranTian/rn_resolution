@@ -1,26 +1,25 @@
-# rn_resolution
-[React Native][rn]中使用的尺寸单位是pt，是一个绝对长度，而设计师使用的是px, 这两种尺寸如何换算呢？官方提供了[PixelRatio][1]:
+[React Native][rn]中使用的尺寸单位是dp(一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，1dp = 1px),而设计师使用的是px, 这两种尺寸如何换算呢？官方提供了[PixelRatio][1]:
 ```javascript
 import {PixelRatio} from 'react-native';
-const pt2px = pt=>PixelRatio.getPixelSizeForLayoutSize(pt);
-const px2pt = px=>PixelRatio.roundToNearestPixel(px);
+const dp2px = dp=>PixelRatio.getPixelSizeForLayoutSize(dp);
+const px2dp = px=>PixelRatio.roundToNearestPixel(px);
 ```
-设计师给你一个尺寸，比如100px*200px的View，按照下面的方式可实现设计还原：
+设计师给你一个尺寸，比如100px*200px的View，按照下面的方式可实现设计还原：
 ```javascript
-<View style={{width:px2pt(100),height:px2pt(200),backgroundColor:"red"}}/>
+<View style={{width:px2dp(100),height:px2dp(200),backgroundColor:"red"}}/>
 ```
 这个时候，你或许会说，这也太麻烦了，每个有尺寸的地方我都得转么，能不能我直接用px写，当然可以，不过需要整体加个缩放系数：
 ```
 import {PixelRatio,Dimensions}} from 'react-native';
-const pt2px = pt=>PixelRatio.getPixelSizeForLayoutSize(pt);
-const px2pt = px=>PixelRatio.roundToNearestPixel(px);
+const dp2px = dp=>PixelRatio.getPixelSizeForLayoutSize(dp);
+const px2dp = px=>PixelRatio.roundToNearestPixel(px);
 
 let pxRatio = PixelRatio.get();
 let {win_width,win_height} = Dimensions.get("window");
 
 let scale = 1/pxRatio;
-let width = pt2px(win_width);
-let height = pt2px(win_height);
+let width = dp2px(win_width);
+let height = dp2px(win_height);
 const com = props=>(
                 <View sytle={styles.container}>
                     <View style={{width:100,height:200,backgroundColor:"red"}}/>
@@ -38,8 +37,7 @@ const styles={
 	},
 }
 ```
-这样处理后，在根节点内，你再也不用考虑pt的问题了，直接使用px即可。
-
+这样处理后，在根节点内，你再也不用考虑dp的问题了，直接使用px即可。
 不过此时还有另外一个问题，设计尺寸是死的，屏幕大小是活的，得考虑分辨率适配啊，那在不同的分辨率下如何正确的实现设计师的设计呢？
 
 我们将使用一种游戏经常会用到得方案，fixedWidth/fixedHeight.
@@ -55,8 +53,8 @@ fixedHeight 模式是保持原始宽高比缩放应用程序内容，缩放后�
 import {Dimensions,PixelRatio} from 'react-native';
 
 let {width,height} = Dimensions.get("window");
-let w =pt2px(width);
-let h = pt2px(height);
+let w =dp2px(width);
+let h = dp2px(height);
 ```
 假定我们的设计尺寸是 
 ```
@@ -77,16 +75,16 @@ let winSize = {width:designSize.width*scale,height:designSize.height};
 
 ```
 import {PixelRatio,Dimensions}} from 'react-native';
-const pt2px = pt=>PixelRatio.getPixelSizeForLayoutSize(pt);
-const px2pt = px=>PixelRatio.roundToNearestPixel(px);
+const dp2px = dp=>PixelRatio.getPixelSizeForLayoutSize(dp);
+const px2dp = px=>PixelRatio.roundToNearestPixel(px);
 
 let designSize = {width:750,height:1336};
 
 let pxRatio = PixelRatio.get();
 let {win_width,win_height} = Dimensions.get("window");
 
-let width = pt2px(win_width);
-let height = pt2px(win_height);
+let width = dp2px(win_width);
+let height = dp2px(win_height);
 
 let design_scale = designSize.width/width;
 height = height*design_scale
@@ -256,7 +254,6 @@ AppRegistry.registerComponent('rn_resolution', () => tets);
 
 ```
 bg_day.jpg的尺寸是750*1500，上面的程序在所有的分辨率下图片都能正确显示。
-
 
 另外：不同分辨率下背景图片尺寸如何选择，移步另一篇博文：[《分辨率适配的取值范围》](http://www.jianshu.com/p/b4bfc7ba11b0)
 
