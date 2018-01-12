@@ -1,3 +1,65 @@
+# Install
+```
+npm install rn_resolution;
+```
+# Demo
+```
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  Image,
+  View
+} from 'react-native';
+
+import Resolution from "rn_resolution";
+
+export default class App extends Component {
+  render() { 
+    return (
+      <Resolution.FixWidthView style={styles.container}>
+        <Image source={require("./assets/bg_day.jpg")} style={{position:"absolute"}}/>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
+      </Resolution.FixWidthView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#ff0000',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+    backgroundColor:"transparent"
+  },
+  instructions: {
+    backgroundColor:"transparent",
+    textAlign: 'center',
+    color: 0xffff,
+    marginBottom: 5,
+  },
+});
+AppRegistry.registerComponent('appname', () => App);
+```
+
+# Detail
+
 [React Native][rn]中使用的尺寸单位是dp(一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，1dp = 1px),而设计师使用的是px, 这两种尺寸如何换算呢？官方提供了[PixelRatio][1]:
 ```javascript
 import {PixelRatio} from 'react-native';

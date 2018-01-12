@@ -1,11 +1,24 @@
 {
 	"name": "rn_resolution",
-	"version": "0.0.1",
-	"private": true,
+	"version": "0.0.2",
+	"main": "Resolution.js",
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/TerranTian/rn_resolution"
+	},
+	"keywords": [
+		"react native",
+		"resolution",
+		"rn",
+		"dp",
+		"px"
+	],
+	"author": "terrantian",
+	"license": "MIT",
 	"dependencies": {
 		"react": "16.2.0",
 		"react-native": "0.52.0"
